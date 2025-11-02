@@ -6,7 +6,7 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // permite leer JSON en los POST
 console.log("Servidor iniciado...");
-// ✅ GET principal: devuelve información del sistema
+// devuelve información del sistema
 app.get("/api/sistema", async (req, res) => {
   try {
     const cpu = await si.cpu();
@@ -51,14 +51,15 @@ app.get("/api/sistema", async (req, res) => {
   }
 });
 
-// ✅ GET adicional: devuelve un mensaje básico
+//  devuelve un mensaje básico
 app.get("/api/mensaje", (req, res) => {
-  res.json({ mensaje: "Hola! Esta API está funcionando correctamente 🚀" });
+  res.json({ mensaje: " funcionando correctamente " });
 });
 
-// ✅ POST: recibe datos del cliente
+// recibe datos del cliente
 app.post("/api/mensaje", (req, res) => {
-  const { nombre, texto } = req.body;
+  // Evita error si no hay body
+  const { nombre, texto } = req.body || {};
 
   if (!nombre || !texto) {
     return res
@@ -68,12 +69,12 @@ app.post("/api/mensaje", (req, res) => {
 
   console.log(`Mensaje recibido de ${nombre}: ${texto}`);
 
-  // Podés guardar el mensaje en un archivo, BD o variable.
   res.json({
     ok: true,
     respuesta: `Gracias, ${nombre}! Tu mensaje fue recibido correctamente.`,
   });
 });
+
 
 // Servidor en puerto 3000
 const PORT = 3000;

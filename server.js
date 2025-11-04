@@ -30,7 +30,7 @@ async function obtenerDatosSistema() {
             discos,
             interfaces,
             carga,
-            so,
+            sistema,
             usuarios,
             bateria,
             procesos,
@@ -103,10 +103,10 @@ async function obtenerDatosSistema() {
                 porcentaje: bateria.hasbattery ? (bateria.percent || 0) + " %" : "N/D",
                 estado: bateria.isCharging ? "Cargando" : "No Cargando"
             },
-            so: {
-                plataforma: so.platform || "Desconocido",
-                distro: so.distro || "Desconocido",
-                version: so.release || "N/D"
+            sistema: {
+                plataforma: sistema.platform || "Desconocido",
+                distro: sistema.distro || "Desconocido",
+                version: sistema.release || "N/D"
             },
             grafica: grafica.controllers.length > 0 ? grafica.controllers[0] : {}
         };
@@ -138,6 +138,7 @@ io.on("connection", (socket) => {
     const intervalo = setInterval(async () => {
         try {
             const datos = await obtenerDatosSistema();
+           
             socket.emit("datosSistema", datos);
         } catch (error) {
             console.error("Error en WebSocket:", error);

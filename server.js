@@ -12,7 +12,8 @@ app.use(express.json());
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "*",
+        origin: ["http://127.0.0.1:5501", "http://192.168.1.7:5501"],
+       // origin: "*",
         methods: ["GET", "POST"]
     }
 });
@@ -152,7 +153,12 @@ io.on("connection", (socket) => {
 });
 
 // Iniciar servidor
-const PORT = 3000;
+/*const PORT = 3000;
 server.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});*/
+const PORT = 3000;
+const HOST = "192.168.1.7"; // IP de tu computadora en la red local
+server.listen(PORT, HOST, () => {
+    console.log(`Servidor corriendo en http://${HOST}:${PORT}`);
 });
